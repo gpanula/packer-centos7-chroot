@@ -28,6 +28,10 @@ find /root /home -name 'authorized_keys' -exec truncate -s 0 {} \;
 # Fix SELinux contexts (bootstrapping in chroot requires a full relabel for some reason)
 /sbin/setfiles -F -e /proc -e /sys -e /dev /etc/selinux/targeted/contexts/files/file_contexts /
 
+# touch autolabel to ensure everything is correctly labeled at boot-time
+# https://wiki.centos.org/HowTos/SELinux#Relabel_Complete_Filesystem
+touch /.autorelabel
+
 # Pause so setfiles can finish before moving on to next action
 sleep 30s
 

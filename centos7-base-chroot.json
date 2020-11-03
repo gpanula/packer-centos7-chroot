@@ -59,8 +59,10 @@
         "sgdisk -og {{.Device}}",
         "sgdisk -n 1:4096:0 -c 1:\"Linux\" -t 1:8300 {{.Device}}",
         "sgdisk -n 128:2048:4095 -c 128:\"BIOS Boot Partition\" -t 128:ef02 {{.Device}}",
+        "lsblk",
+        "fdisk -l /dev/$( lsblk | awk '{ print $1 }' | grep -v NAME | grep -v nvme0n1 | head -n 1)",
         "echo 'Create desired filesystem on device'",
-        "mkfs.{{user `fs_type`}} -L root {{.Device}}1",
+        "mkfs.{{user `fs_type`}} -L root /dev/$( lsblk | awk '{ print $1 }' | grep -v NAME | grep -v nvme0n1 | head -n 1)p1",
         "sync"
       ],
       "post_mount_commands": [
@@ -75,6 +77,10 @@
       ],
       "root_volume_size": "{{user `root_device_size`}}",
       "root_device_name": "/dev/xvda",
+      "nvme_device_path": "/dev/nvme1n1p1",
+      "mount_partition": 0,
+      "mount_path": "/mnt/packer-amazon-chroot-volumes/nvme1n1",
+      "device_path": "/dev/sdf",
       "ami_block_device_mappings": [
         {
           "device_name": "/dev/xvda",

@@ -6,7 +6,8 @@
 source /tmp/env_vars
 
 # Force install of various Xen/AWS specific drivers into the kernel
-dracut --force --add-drivers "xen_blkfront virtio ixgbevf" /boot/initramfs-$(uname -r).img
+#find /boot -type f \( -iname "initramfs*" ! -iname "*kdump*" \) -exec dracut --force --add-drivers "ena virtio ixgbevf" {} \;
+ls /boot
 
 # Drop default config for grub
 cat > /etc/default/grub << EOT

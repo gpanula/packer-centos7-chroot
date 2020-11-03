@@ -2,7 +2,7 @@
 #
 
 # Install basic set of packages
-yum -y install @core authconfig audit deltarpm sudo chrony cloud-init cloud-utils-growpart dracut-config-generic dracut-norescue firewalld grub2 kernel nfs-utils rsync tar yum-utils tuned dnsmasq gnutls gdisk
+yum -y install @core authconfig audit deltarpm sudo chrony cloud-init cloud-utils-growpart dracut-config-generic dracut-norescue firewalld grub2 kernel rsync tar yum-utils tuned gnutls gdisk bind-utils tcpdump
 
 # Remove the packages we don't want or need in our AWS base image
 # install aws agents

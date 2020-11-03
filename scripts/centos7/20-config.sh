@@ -5,8 +5,8 @@
 source /tmp/env_vars
 
 # locale
-echo 'en_US.UTF-8 UTF-8' > /etc/locale.gen
-echo 'LANG=en_US.UTF-8' > /etc/locale.conf
+echo 'en_US.UTF-8 UTF-8' >/etc/locale.gen
+echo 'LANG=en_US.UTF-8' >/etc/locale.conf
 
 # authconfig stuff
 authconfig --enableshadow --passalgo=sha512 --updateall
@@ -16,10 +16,10 @@ cp -a /etc/skel/.bash* /root
 
 # Timezone
 cp /usr/share/zoneinfo/UTC /etc/localtime
-echo 'ZONE="UTC"' > /etc/sysconfig/clock
+echo 'ZONE="UTC"' >/etc/sysconfig/clock
 
 # Set tuned profile to virtual-guest for use in AWS/virt
-echo "virtual-guest" > /etc/tuned/active_profile
+echo "virtual-guest" >/etc/tuned/active_profile
 
 # Disallow root login via SSHD
 sed -i -r 's@^#?PermitRootLogin.*$@PermitRootLogin no@' /etc/ssh/sshd_config
@@ -28,10 +28,10 @@ sed -i -r 's@^#?PermitRootLogin.*$@PermitRootLogin no@' /etc/ssh/sshd_config
 sed -i -r "s@^.*requiretty@#Defaults !requiretty@" /etc/sudoers
 
 # disable firstboot
-echo "RUN_FIRSTBOOT=NO" > /etc/sysconfig/firstboot
+echo "RUN_FIRSTBOOT=NO" >/etc/sysconfig/firstboot
 
 # instance type markers - Pulled from CentOS AMI creation kickstart
-echo 'genclo' > /etc/yum/vars/infra
+echo 'genclo' >/etc/yum/vars/infra
 
 # setup systemd to boot to the right runlevel
 rm -f /etc/systemd/system/default.target

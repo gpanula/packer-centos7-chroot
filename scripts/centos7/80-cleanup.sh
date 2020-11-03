@@ -36,6 +36,4 @@ touch /.autorelabel
 sleep 30s
 
 # Disk clean up final
-dd if=/dev/zero of=/zeros bs=1M
-rm -f /zeros
 sync

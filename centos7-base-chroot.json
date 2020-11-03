@@ -8,7 +8,7 @@
     "build_stage": "base",
     "os_name": "centos",
     "os_version": "7",
-    "root_device_size": "8",
+    "root_volume_size": "8",
     "fs_type": "xfs",
     "repo_baseurl": "mirror.centos.org",
     "rpm_release_file": "centos-release-7-3.1611.el7.centos.x86_64.rpm"
@@ -78,7 +78,7 @@
         "echo 'Write out variable for use by provisioning scripts'",
         "echo 'DEVICE={{.Device}}' > {{.MountPath}}/tmp/env_vars"
       ],
-      "root_volume_size": "{{user `root_device_size`}}",
+      "root_volume_size": "{{user `root_volume_size`}}",
       "root_device_name": "/dev/xvda",
       "nvme_device_path": "/dev/nvme1n1p1",
       "mount_partition": 0,

@@ -13,6 +13,10 @@ systemctl -q enable chronyd
 systemctl -q enable rsyslog
 systemctl -q enable network
 
+# enable aws agents
+systemctl -q enable amazon-ssm-agent
+systemctl -q enable amazon-cloudwatch-agent
+
 systemctl -q disable kdump
 
 systemctl mask tmp.mount

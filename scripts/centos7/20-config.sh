@@ -40,17 +40,22 @@ ln -s /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 # disable AutoVT services for TTYs
 sed -i -r 's@^#NAutoVTs=.*@NAutoVTs=0@' /etc/systemd/logind.conf
 
+# get UUID of root disk
+ROOTUUID=$(blkid -o export ${DEVICE}1 -s UUID | grep ^UUID)
+
 # Generate basic fstab
-cat > /etc/fstab << EOT
+cat >/etc/fstab <<EOT
 #
 # /etc/fstab
 #
 # Accessible filesystems, by reference, are maintained under '/dev/disk'
 # See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
 #
-LABEL=root /         xfs     defaults,noatime   1 1
+${ROOTUUID} /         xfs     defaults,noatime   1 1
 tmpfs      /dev/shm  tmpfs   defaults           0 0
 devpts     /dev/pts  devpts  gid=5,mode=620     0 0
 sysfs      /sys      sysfs   defaults           0 0
 proc       /proc     proc    defaults           0 0
 EOT
+
+cat /etc/fstab

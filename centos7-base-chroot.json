@@ -1,19 +1,17 @@
 {
   "description": "AMI Builder for CentOS 7",
   "variables": {
-    "aws_access_key": "",
-    "aws_secret_key": "",
     "region": "us-east-1",
-    "project_name": "c7build",
     "build_stage": "base",
     "os_name": "centos",
     "os_version": "7",
     "root_volume_size": "8",
     "fs_type": "xfs",
     "repo_baseurl": "mirror.centos.org",
-    "rpm_release_file": "centos-release-7-3.1611.el7.centos.x86_64.rpm"
+    "rpm_release_file": "centos-release-7-8.2003.0.el7.centos.x86_64.rpm",
+    "ami_name": "Centos_7_Base",
+    "timestamp": "{{isotime \"2006-Jan-02_1504_MST\"}}"
   },
-
   "provisioners": [
     {
       "type": "file",
@@ -42,14 +40,12 @@
       ]
     }
   ],
-
   "builders": [
     {
       "type": "amazon-chroot",
-      "access_key": "{{user `aws_access_key`}}",
-      "secret_key": "{{user `aws_secret_key`}}",
-      "ami_name": "{{user `os_name`}}-{{user `os_version`}}-{{user `build_stage`}}-{{isotime \"2006-01-02-030405\" | clean_ami_name}}",
-      "ami_description": "{{user `os_name`}} {{user `os_version`}} {{user `build_stage`}} image built on {{isotime \"2006-01-02\"}}",
+      "region": "{{ user `region` }}",
+      "ami_name": "{{user `ami_name`}} {{user `timestamp`}}",
+      "ami_description": "{{user `os_name`}} {{user `os_version`}} {{user `build_stage`}} image built on {{user `timestamp`}}",
       "from_scratch": true,
       "ami_virtualization_type": "hvm",
       "pre_mount_commands": [
@@ -91,10 +87,11 @@
           "volume_type": "gp2"
         }
       ],
-      "copy_files": ["/etc/resolv.conf"],
+      "copy_files": [
+        "/etc/resolv.conf"
+      ],
       "tags": {
-        "buildStage": "{{user `build_stage`}}",
-        "buildDate": "{{isotime \"2006-01-02\"}}",
+        "buildDate": "{{timestamp}}",
         "os": "{{user `os_name`}}",
         "version": "{{user `os_version`}}"
       }

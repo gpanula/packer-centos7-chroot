@@ -95,7 +95,8 @@
         "/etc/resolv.conf"
       ],
       "tags": {
-        "buildDate": "{{timestamp}}",
+        "epoch_creation_date": "{{timestamp}}",
+        "build_date": "{{user `timestamp`}}",
         "os": "{{user `os_name`}}",
         "version": "{{user `os_version`}}"
       }

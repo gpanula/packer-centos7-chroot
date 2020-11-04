@@ -5,9 +5,10 @@
 # Source the vars we need to know the device name
 source /tmp/env_vars
 
-# Force install of various Xen/AWS specific drivers into the kernel
-#find /boot -type f \( -iname "initramfs*" ! -iname "*kdump*" \) -exec dracut --force --add-drivers "ena virtio ixgbevf" {} \;
-ls /boot
+# add ena virtio ixgbevf to dracut config
+# ref: https://man7.org/linux/man-pages/man5/dracut.conf.5.html
+# ref: https://wiki.gentoo.org/wiki/Dracut
+echo 'force_drivers+="ena virtio ixgbevf"' >/etc/dracut.conf.d/01_aws_modules.conf
 
 # Drop default config for grub
 cat > /etc/default/grub << EOT

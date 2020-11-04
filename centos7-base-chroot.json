@@ -10,7 +10,9 @@
     "repo_baseurl": "mirror.centos.org",
     "rpm_release_file": "centos-release-7-8.2003.0.el7.centos.x86_64.rpm",
     "ami_name": "Centos_7_Base",
-    "timestamp": "{{isotime \"2006-Jan-02_1504_MST\"}}"
+    "timestamp": "{{isotime \"2006-Jan-02_1504_MST\"}}",
+    "ena_support": "true",
+    "sriov_support": "true"
   },
   "provisioners": [
     {
@@ -46,6 +48,8 @@
       "region": "{{ user `region` }}",
       "ami_name": "{{user `ami_name`}} {{user `timestamp`}}",
       "ami_description": "{{user `os_name`}} {{user `os_version`}} {{user `build_stage`}} image built on {{user `timestamp`}}",
+      "ena_support": "{{ user `ena_support` }}",
+      "sriov_support": "{{ user `sriov_support` }}",
       "from_scratch": true,
       "ami_virtualization_type": "hvm",
       "pre_mount_commands": [

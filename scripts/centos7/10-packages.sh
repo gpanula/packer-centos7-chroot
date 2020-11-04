@@ -2,7 +2,7 @@
 #
 
 # Install basic set of packages
-yum -y install @core authconfig audit deltarpm sudo chrony cloud-init cloud-utils-growpart dracut-config-generic dracut-norescue firewalld grub2 kernel rsync tar yum-utils tuned gnutls gdisk bind-utils tcpdump
+yum -y install @core authconfig audit deltarpm sudo chrony cloud-init cloud-utils-growpart dracut-config-generic dracut-norescue firewalld grub2 kernel rsync tar yum-utils tuned gnutls gdisk bind-utils tcpdump unzip iputils policycoreutils-python
 
 # Remove the packages we don't want or need in our AWS base image
 rpm -qa | grep NetworkManager | xargs yum -y remove

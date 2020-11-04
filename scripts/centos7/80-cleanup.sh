@@ -35,5 +35,8 @@ touch /.autorelabel
 # Pause so setfiles can finish before moving on to next action
 sleep 30s
 
+# restore yum backups
+rsync -vah /etc/yum.repos.backup/ /etc/yum.repos.d/
+
 # Disk clean up final
 sync

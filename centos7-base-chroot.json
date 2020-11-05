@@ -43,6 +43,19 @@
       ]
     }
   ],
+  "post-processors": [
+    {
+      "type": "manifest",
+      "output": "build_manifest.json",
+      "strip_path": true,
+      "custom_data": {
+        "epoch_creation_date": "{{timestamp}}",
+        "build_date": "{{user `timestamp`}}",
+        "os": "{{user `os_name`}}",
+        "version": "{{user `os_version`}}"
+      }
+    }
+  ],
   "builders": [
     {
       "type": "amazon-chroot",

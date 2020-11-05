@@ -7,6 +7,8 @@
     "os_version": "7",
     "root_volume_size": "8",
     "fs_type": "xfs",
+    "nvme_device": "nvme1n1",
+    "device_path": "/dev/sdf",
     "repo_baseurl": "mirror.centos.org",
     "ami_name": "Centos_7_Base",
     "timestamp": "{{isotime \"2006-Jan-02_1504_MST\"}}",
@@ -54,6 +56,10 @@
       "pre_mount_commands": [
         "echo 'Make sure gdisk is installed on builder'",
         "yum -y install gdisk",
+        "echo create symlink to device if needed",
+        "[ ! -e {{.Device}} ] && ln -s /dev/{{ user `nvme_device` }} {{.Device}}",
+        "ls -l {{.Device}}",
+        "sleep 3",
         "echo 'Partition device'",
         "sgdisk -og {{.Device}}",
         "sgdisk -n 1:4096:0 -c 1:\"Linux\" -t 1:8300 {{.Device}}",
@@ -81,10 +87,10 @@
       ],
       "root_volume_size": "{{user `root_volume_size`}}",
       "root_device_name": "/dev/xvda",
-      "nvme_device_path": "/dev/nvme1n1p1",
+      "nvme_device_path": "/dev/{{ user `nvme_device` }}p1",
       "mount_partition": 0,
-      "mount_path": "/mnt/packer-amazon-chroot-volumes/nvme1n1",
-      "device_path": "/dev/sdf",
+      "mount_path": "/mnt/packer-amazon-chroot-volumes/{{ user `nvme_device` }}",
+      "device_path": "{{ user `device_path` }}",
       "ami_block_device_mappings": [
         {
           "device_name": "/dev/xvda",

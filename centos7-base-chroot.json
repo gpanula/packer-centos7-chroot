@@ -70,7 +70,7 @@
         "echo 'Make sure gdisk is installed on builder'",
         "yum -y install gdisk",
         "echo create symlink to device if needed",
-        "[ ! -e {{.Device}} ] && ln -s /dev/{{ user `nvme_device` }} {{.Device}}",
+        "[ ! -e {{.Device}} ] && ln -s /dev/{{ user `nvme_device` }} {{.Device}} || echo {{.Device}} found not creating symlink",
         "ls -l {{.Device}}",
         "sleep 3",
         "echo 'Partition device'",

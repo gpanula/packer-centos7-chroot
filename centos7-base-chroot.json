@@ -98,7 +98,8 @@
         "echo 'Make sure yum and deltarpm are installed'",
         "yum --installroot={{.MountPath}} -y install yum deltarpm",
         "echo 'Write out variable for use by provisioning scripts'",
-        "echo 'DEVICE={{.Device}}' > {{.MountPath}}/tmp/env_vars"
+        "echo 'DEVICE={{.Device}}' > {{.MountPath}}/tmp/env_vars",
+        "echo 'NVME=/dev/{{ user `nvme_device` }}p1' >> {{.MountPath}}/tmp/env_vars"
       ],
       "root_volume_size": "{{user `root_volume_size`}}",
       "root_device_name": "/dev/xvda",

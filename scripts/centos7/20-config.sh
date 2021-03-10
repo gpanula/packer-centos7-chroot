@@ -1,5 +1,4 @@
 #!/bin/sh -x
-#
 
 # Source variables for fstab generation
 source /tmp/env_vars
@@ -41,7 +40,20 @@ ln -s /lib/systemd/system/multi-user.target /etc/systemd/system/default.target
 sed -i -r 's@^#NAutoVTs=.*@NAutoVTs=0@' /etc/systemd/logind.conf
 
 # get UUID of root disk
-ROOTUUID=$(blkid -o export ${DEVICE}1 -s UUID | grep ^UUID)
+ROOTUUID=$(blkid -o export ${NVME} -s UUID | grep ^UUID)
+
+if [ -z "${ROOTUUID}" ]; then
+  echo ""
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo "ROOTUUID IS EMPTY"
+  echo "Unable to build functional fstab with an empty ROOTUUID"
+  echo "Bailing out here"
+  echo "!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!"
+  echo ""
+  exit 99
+fi
+
+echo "ROOTUUID is ${ROOTUUID}"
 
 # Generate basic fstab
 cat >/etc/fstab <<EOT
